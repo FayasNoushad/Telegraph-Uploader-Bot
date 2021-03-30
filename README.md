@@ -23,7 +23,7 @@ Deploy on Heroku
 </p>
 
 Deploy in your vps
-```
+```sh
 git clone https://github.com/FayasNoushad/Telegraph-Uploader-Bot
 cd Telegraph-Uploader-Bot
 pip3 install -r requirements.txt
@@ -37,10 +37,6 @@ python3 bot.py
 * `API_ID` Your API ID from my.telegram.org
 * `BOT_TOKEN` Your bot token from @BotFather
 
-### Requirements
-
-`pip3 install -r requirements.txt`
-
 ### Support
 
 * [Twitter](https://twitter.com/FayasNoushad)
@@ -51,8 +47,3 @@ python3 bot.py
 ### Credits
 
 * [Pyrogram](https://github.com/pyrogram/pyrogram)
-* [Contributors](https://github.com/FayasNoushad/Telegraph-Uploader-Bot/graphs/contributors)
-
-### LICENSE
-
-[GNU General Public License v3.0](https://github.com/FayasNoushad/Telegraph-Uploader-Bot/blob/main/LICENSE)
