@@ -34,7 +34,7 @@ async def start(bot, update):
         text=START_TEXT.format(update.from_user.mention),
         parse_mode="html",
         disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('⚙ Channel ⚙', url='https://telegram.me/FayasNoushad'), InlineKeyboardButton('⚙ Group ⚙', url='https://telegram.me/FayasChat')]]),
+        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('⚙ JOIN UPDATES CHANNEL ⚙', url='https://telegram.me/FayasNoushad')]]),
         reply_to_message_id=update.message_id
     )
 
