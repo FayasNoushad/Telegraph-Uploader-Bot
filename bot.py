@@ -49,21 +49,13 @@ async def getmedia(bot, update):
         disable_web_page_preview=True,
         reply_to_message_id=update.message_id
     )
-    await bot.download_media(
-        message=update,
-        file_name=medianame
-    )
-    await text.edit_text(
-        text="<code>Downloading Completed. Now I'am Uploading to telegra.ph Link ...</code>"
-    )
+    await bot.download_media(message=update, file_name=medianame)
+    await text.edit_text(text="<code>Downloading Completed. Now I'am Uploading to telegra.ph Link ...</code>")
     try:
         response = upload_file(medianame)
     except Exception as error:
         print(error)
-        await text.edit_text(
-            text=f"Error :- {error}",
-            disable_web_page_preview=True
-        )
+        await text.edit_text(text=f"Error :- {error}", disable_web_page_preview=True)
         return
     await text.edit_text(
         text=f"<b>Link :-</b> <code>https://telegra.ph{response[0]}</code>\n\n<b>Join :-</b> @FayasNoushad",
