@@ -12,28 +12,30 @@ from telegraph import upload_file
 FayasNoushad = Client("Telegraph Uploader Bot", bot_token = os.environ["BOT_TOKEN"], api_id = int(os.environ["API_ID"]), api_hash = os.environ["API_HASH"])
 
 START_TEXT = """
-Hello {}, I' am small media or file to telegra.ph link uploader bot.
+Hello {}, I am small media or file to telegra.ph link uploader bot.
 
 - Just give me a media under 5MB
 - Then I will download it
 - I will then upload it to the telegra.ph link
-
-Made by @FayasNoushad
 """
 
-# start command
 @FayasNoushad.on_message(filters.command(["start"]))
 async def start(bot, update):
+    buttons=InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton('Channel', url='https://telegram.me/FayasNoushad'),
+        InlineKeyboardButton('Feedback', url='https://telegram.me/TheFayas')
+        ]]
+    )
     await bot.send_message(
         chat_id=update.chat.id,
         text=START_TEXT.format(update.from_user.mention),
         parse_mode="html",
         disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton('⚙ JOIN UPDATES CHANNEL ⚙', url='https://telegram.me/FayasNoushad')]]),
+        reply_markup=buttons,
         reply_to_message_id=update.message_id
     )
 
-# Main function
 @FayasNoushad.on_message(filters.media & filters.private)
 async def getmedia(bot, update):
     medianame = "./DOWNLOADS/" + "FayasNoushad/FnTelegraphBot"
@@ -52,11 +54,18 @@ async def getmedia(bot, update):
         print(error)
         await text.edit_text(text=f"Error :- {error}", disable_web_page_preview=True)
         return
+    buttons=InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton(text="Open Link", url=f"https://telegra.ph{response[0]}"),
+        InlineKeyboardButton(text="Share Link", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}"),
+        ],[
+        InlineKeyboardButton(text="Join Updates Channel", url="https://telegram.me/FayasNoushad")
+        ]]
+    )
     await text.edit_text(
         text=f"<b>Link :-</b> <code>https://telegra.ph{response[0]}</code>\n\n<b>Join :-</b> @FayasNoushad",
         disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="Open Link", url=f"https://telegra.ph{response[0]}"), InlineKeyboardButton(text="Share Link", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}"),],
-                                           [InlineKeyboardButton(text="⚙ Join Updates Channel ⚙", url="https://telegram.me/FayasNoushad")]])
+        reply_markup=buttons
     )
     try:
         os.remove(medianame)
