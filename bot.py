@@ -9,12 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from telegraph import upload_file
 
-FayasNoushad = Client(
-    "Telegraph Uploader Bot",
-    bot_token = os.environ["BOT_TOKEN"],
-    api_id = int(os.environ["API_ID"]),
-    api_hash = os.environ["API_HASH"],
-)
+FayasNoushad = Client("Telegraph Uploader Bot", bot_token = os.environ["BOT_TOKEN"], api_id = int(os.environ["API_ID"]), api_hash = os.environ["API_HASH"])
 
 START_TEXT = """
 Hello {}, I' am small media or file to telegra.ph link uploader bot.
