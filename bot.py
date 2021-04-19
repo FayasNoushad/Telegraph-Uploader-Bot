@@ -20,12 +20,14 @@ HELP_TEXT = """
 - I will then upload it to the telegra.ph link
 """
 ABOUT_TEXT = """
-Bot : [Telegraph Uploader](https://telegram.me/FnTelegraphBot)
-Creator : [Fayas](https://telegram.me/TheFayas)
-Channel : [Fayas Noushad](https://telegram.me/FayasNoushad)
-Source : [Click here](https://github.com/FayasNoushad/Telegraph-Uploader-Bot)
-Language : [Python3](https://python.org)
-Library : [Pyrogram v1.2.0](https://pyrogram.org)
+- **Bot :** `Telegraph Uploader`
+- **Creator :** [Fayas](https://telegram.me/TheFayas)
+- **Channel :** [Fayas Noushad](https://telegram.me/FayasNoushad)
+- **Credits :** `Everyone in this journey`
+- **Source :** [Click here](https://github.com/FayasNoushad/Telegraph-Uploader-Bot)
+- **Language :** [Python3](https://python.org)
+- **Library :** [Pyrogram v1.2.0](https://pyrogram.org)
+- **Server :** [Heroku](https://heroku.com)
 """
 START_BUTTONS = InlineKeyboardMarkup(
         [[
