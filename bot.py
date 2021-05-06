@@ -23,7 +23,6 @@ ABOUT_TEXT = """
 - **Bot :** `Telegraph Uploader`
 - **Creator :** [Fayas](https://telegram.me/TheFayas)
 - **Channel :** [Fayas Noushad](https://telegram.me/FayasNoushad)
-- **Credits :** `Everyone in this journey`
 - **Source :** [Click here](https://github.com/FayasNoushad/Telegraph-Uploader-Bot)
 - **Language :** [Python3](https://python.org)
 - **Library :** [Pyrogram v1.2.0](https://pyrogram.org)
@@ -93,12 +92,9 @@ async def start(bot, update):
 @FayasNoushad.on_message(filters.media & filters.private)
 async def getmedia(bot, update):
     medianame = "./DOWNLOADS/" + "FayasNoushad/FnTelegraphBot"
-    message = await bot.send_message(
-        chat_id=update.chat.id,
+    message = await update.reply_message(
         text="<code>Downloading to My Server ...</code>",
-        parse_mode="html",
-        disable_web_page_preview=True,
-        reply_to_message_id=update.message_id
+        disable_web_page_preview=True
     )
     await bot.download_media(
         message=update,
