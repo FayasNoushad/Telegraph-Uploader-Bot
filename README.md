@@ -1,5 +1,4 @@
 # Telegraph-Uploader-Bot
-
 A simple small media or file to telegra.ph link uploader bot.
 
 ---
@@ -56,5 +55,5 @@ python3 bot.py
 
 ## Credits
 
-* [Fayas Noushad](https://github.com/FayasNoushad)
-* [Pyrogram](https://github.com/pyrogram/pyrogram)
+- [Fayas Noushad](https://github.com/FayasNoushad)
+- [Pyrogram](https://github.com/pyrogram/pyrogram)
