@@ -9,7 +9,12 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from telegraph import upload_file
 
-FayasNoushad = Client("Telegraph Uploader Bot", bot_token = os.environ["BOT_TOKEN"], api_id = int(os.environ["API_ID"]), api_hash = os.environ["API_HASH"])
+FayasNoushad = Client(
+        "Telegraph Uploader Bot",
+        bot_token = os.environ["BOT_TOKEN"],
+        api_id = int(os.environ["API_ID"]),
+        api_hash = os.environ["API_HASH"]
+)
 
 START_TEXT = """
 Hello {}, I am an under 5MB media or file to telegra.ph link uploader bot.
@@ -81,12 +86,10 @@ async def cb_data(bot, update):
 async def start(bot, update):
     text = START_TEXT.format(update.from_user.mention)
     reply_markup = START_BUTTONS
-    await bot.send_message(
-        chat_id=update.chat.id,
+    await update.reply_text(
         text=text,
         disable_web_page_preview=True,
-        reply_markup=reply_markup,
-        reply_to_message_id=update.message_id
+        reply_markup=reply_markup
     )
 
 @FayasNoushad.on_message(filters.media & filters.private)
