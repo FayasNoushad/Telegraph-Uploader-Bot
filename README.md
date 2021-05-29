@@ -33,7 +33,7 @@ git clone https://github.com/FayasNoushad/Telegraph-Uploader-Bot
 cd Telegraph-Uploader-Bot
 pip3 install -r requirements.txt
 # <Create Variables appropriately>
-python3 bot.py
+python3 main.py
 ```
 
 </details>
