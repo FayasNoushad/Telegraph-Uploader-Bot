@@ -18,11 +18,15 @@ FayasNoushad = Client(
 
 START_TEXT = """
 Hello {}, I am an under 5MB media or file to telegra.ph link uploader bot.
+
+Made by @FayasNoushad
 """
 HELP_TEXT = """
 - Just give me a media under 5MB
 - Then I will download it
 - I will then upload it to the telegra.ph link
+
+Made by @FayasNoushad
 """
 ABOUT_TEXT = """
 - **Bot :** `Telegraph Uploader`
