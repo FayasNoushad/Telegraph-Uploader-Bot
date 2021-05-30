@@ -86,7 +86,7 @@ async def cb_data(bot, update):
         await update.message.delete()
     
 
-@FayasNoushad.on_message(filters.command(["start"]))
+@FayasNoushad.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
     text = START_TEXT.format(update.from_user.mention)
     reply_markup = START_BUTTONS
@@ -96,7 +96,7 @@ async def start(bot, update):
         reply_markup=reply_markup
     )
 
-@FayasNoushad.on_message(filters.media & filters.private)
+@FayasNoushad.on_message(filters.private & filters.media)
 async def getmedia(bot, update):
     medianame = "./DOWNLOADS/" + "FayasNoushad/FnTelegraphBot"
     message = await update.reply_message(
@@ -108,7 +108,8 @@ async def getmedia(bot, update):
         file_name=medianame
     )
     await message.edit_text(
-        text="<code>Downloading Completed. Now I am Uploading to telegra.ph Link ...</code>"
+        text="<code>Downloading Completed. Now I am Uploading to telegra.ph Link ...</code>",
+        disable_web_page_preview=True
     )
     try:
         response = upload_file(medianame)
@@ -130,7 +131,7 @@ async def getmedia(bot, update):
     reply_markup=InlineKeyboardMarkup(
         [[
         InlineKeyboardButton(text="Open Link", url=f"https://telegra.ph{response[0]}"),
-        InlineKeyboardButton(text="Share Link", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}"),
+        InlineKeyboardButton(text="Share Link", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}")
         ],[
         InlineKeyboardButton(text="Join Updates Channel", url="https://telegram.me/FayasNoushad")
         ]]
