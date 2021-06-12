@@ -98,20 +98,16 @@ async def start(bot, update):
 
 @FayasNoushad.on_message(filters.private & filters.media)
 async def getmedia(bot, update):
-    medianame = "./DOWNLOADS/" + "FayasNoushad/FnTelegraphBot"
-    message = await update.reply_message(
-        text="<code>Downloading to My Server ...</code>",
-        disable_web_page_preview=True
-    )
-    await bot.download_media(
-        message=update,
-        file_name=medianame
-    )
-    await message.edit_text(
-        text="<code>Downloading Completed. Now I am Uploading to telegra.ph Link ...</code>",
-        disable_web_page_preview=True
-    )
+    medianame = "./DOWNLOADS/" + str(update.from_user.id) + "/FayasNoushad/FnTelegraphBot"
     try:
+        message = await update.reply_message(
+            text="`Processing...`",
+            disable_web_page_preview=True
+        )
+        await bot.download_media(
+            message=update,
+            file_name=medianame
+        )
         response = upload_file(medianame)
     except Exception as error:
         print(error)
@@ -127,7 +123,7 @@ async def getmedia(bot, update):
             reply_markup=reply_markup
         )
         return
-    text=f"<b>Link :-</b> <code>https://telegra.ph{response[0]}</code>\n\n<b>Join :-</b> @FayasNoushad"
+    text=f"**Link :-** `https://telegra.ph{response[0]}`\n\n**Join :-** @FayasNoushad"
     reply_markup=InlineKeyboardMarkup(
         [[
         InlineKeyboardButton(text="Open Link", url=f"https://telegra.ph{response[0]}"),
