@@ -10,10 +10,10 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from telegraph import upload_file
 
 FayasNoushad = Client(
-        "Telegraph Uploader Bot",
-        bot_token = os.environ["BOT_TOKEN"],
-        api_id = int(os.environ["API_ID"]),
-        api_hash = os.environ["API_HASH"]
+    "Telegraph Uploader Bot",
+    bot_token = os.environ["BOT_TOKEN"],
+    api_id = int(os.environ["API_ID"]),
+    api_hash = os.environ["API_HASH"]
 )
 
 START_TEXT = """
