@@ -109,6 +109,10 @@ async def getmedia(bot, update):
             file_name=medianame
         )
         response = upload_file(medianame)
+        try:
+            os.remove(medianame)
+        except:
+            pass
     except Exception as error:
         print(error)
         text=f"Error :- <code>{error}</code>"
@@ -137,9 +141,5 @@ async def getmedia(bot, update):
         disable_web_page_preview=True,
         reply_markup=reply_markup
     )
-    try:
-        os.remove(medianame)
-    except:
-        pass
 
 FayasNoushad.run()
