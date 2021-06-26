@@ -95,6 +95,7 @@ async def start(bot, update):
     await update.reply_text(
         text=text,
         disable_web_page_preview=True,
+        quote=True,
         reply_markup=reply_markup
     )
 
@@ -104,6 +105,7 @@ async def getmedia(bot, update):
     try:
         message = await update.reply_message(
             text="`Processing...`",
+            quote=True,
             disable_web_page_preview=True
         )
         await bot.download_media(
