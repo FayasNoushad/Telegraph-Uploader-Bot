@@ -34,7 +34,7 @@ ABOUT_TEXT = """
 - **Channel :** [Fayas Noushad](https://telegram.me/FayasNoushad)
 - **Source :** [Click here](https://github.com/FayasNoushad/Telegraph-Uploader-Bot)
 - **Language :** [Python3](https://python.org)
-- **Library :** [Pyrogram v1.2.0](https://pyrogram.org)
+- **Library :** [Pyrogram](https://pyrogram.org)
 - **Server :** [Heroku](https://heroku.com)
 """
 START_BUTTONS = InlineKeyboardMarkup(
