@@ -16,6 +16,8 @@ FayasNoushad = Client(
     api_hash = os.environ["API_HASH"]
 )
 
+DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "./DOWNLOADS/")
+
 START_TEXT = """
 Hello {}, I am an under 5MB media or file to telegra.ph link uploader bot.
 
@@ -98,7 +100,7 @@ async def start(bot, update):
 
 @FayasNoushad.on_message(filters.private & filters.media)
 async def getmedia(bot, update):
-    medianame = "./DOWNLOADS/" + str(update.from_user.id) + "/FayasNoushad/FnTelegraphBot"
+    medianame = DOWNLOAD_LOCATION + str(update.from_user.id)
     try:
         message = await update.reply_message(
             text="`Processing...`",
