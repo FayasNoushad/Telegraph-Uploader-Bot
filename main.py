@@ -9,7 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from telegraph import upload_file
 
-FayasNoushad = Client(
+Bot = Client(
     "Telegraph Uploader Bot",
     bot_token = os.environ["BOT_TOKEN"],
     api_id = int(os.environ["API_ID"]),
@@ -64,7 +64,7 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
         ]]
     )
 
-@FayasNoushad.on_callback_query()
+@Bot.on_callback_query()
 async def cb_data(bot, update):
     if update.data == "home":
         await update.message.edit_text(
@@ -88,7 +88,7 @@ async def cb_data(bot, update):
         await update.message.delete()
     
 
-@FayasNoushad.on_message(filters.private & filters.command(["start"]))
+@Bot.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
     text = START_TEXT.format(update.from_user.mention)
     reply_markup = START_BUTTONS
@@ -99,7 +99,7 @@ async def start(bot, update):
         reply_markup=reply_markup
     )
 
-@FayasNoushad.on_message(filters.private & filters.media)
+@Bot.on_message(filters.private & filters.media)
 async def getmedia(bot, update):
     medianame = DOWNLOAD_LOCATION + str(update.from_user.id)
     try:
@@ -148,4 +148,4 @@ async def getmedia(bot, update):
         reply_markup=reply_markup
     )
 
-FayasNoushad.run()
+Bot.run()
