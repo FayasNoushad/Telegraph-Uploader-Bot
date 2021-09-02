@@ -118,7 +118,6 @@ async def getmedia(bot, update):
         except:
             pass
     except Exception as error:
-        print(error)
         text=f"Error :- <code>{error}</code>"
         reply_markup=InlineKeyboardMarkup(
             [[
@@ -133,12 +132,15 @@ async def getmedia(bot, update):
         return
     text=f"**Link :-** `https://telegra.ph{response[0]}`\n\n**Join :-** @FayasNoushad"
     reply_markup=InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton(text="Open Link", url=f"https://telegra.ph{response[0]}"),
-        InlineKeyboardButton(text="Share Link", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}")
-        ],[
-        InlineKeyboardButton(text="Join Updates Channel", url="https://telegram.me/FayasNoushad")
-        ]]
+        [
+            [
+                InlineKeyboardButton(text="Open Link", url=f"https://telegra.ph{response[0]}"),
+                InlineKeyboardButton(text="Share Link", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}")
+            ],
+            [
+                InlineKeyboardButton(text="Join Updates Channel", url="https://telegram.me/FayasNoushad")
+            ]
+        ]
     )
     await message.edit_text(
         text=text,
