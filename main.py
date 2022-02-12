@@ -1,14 +1,14 @@
 import os
+from telegraph import upload_file
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from telegraph import upload_file
 
 
 Bot = Client(
     "Telegraph Uploader Bot",
-    bot_token = os.environ["BOT_TOKEN"],
-    api_id = int(os.environ["API_ID"]),
-    api_hash = os.environ["API_HASH"]
+    bot_token=os.environ.get("BOT_TOKEN"),
+    api_id=int(os.environ.get("API_ID")),
+    api_hash=os.environ.get("API_HASH")
 )
 
 DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "./DOWNLOADS/")
@@ -107,6 +107,7 @@ async def start(bot, update):
         quote=True,
         reply_markup=START_BUTTONS
     )
+
 
 @Bot.on_message(filters.private & filters.media)
 async def getmedia(bot, update):
