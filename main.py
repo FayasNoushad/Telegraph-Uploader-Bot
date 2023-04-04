@@ -23,20 +23,23 @@ HELP_TEXT = """**About Me**
 - Just give me a media under 5MB
 - Then I will download it
 - I will then upload it to the telegra.ph link
-
-Made by @FayasNoushad"""
+"""
 
 ABOUT_TEXT = """**About Me**
 
 - **Bot :** `Telegraph Uploader`
-- **Creator :** [Fayas](https://telegram.me/TheFayas)
-- **Channel :** [Fayas Noushad](https://telegram.me/FayasNoushad)
+- **Developer :**
+  • [GitHub](https://github.com/FayasNoushad)
+  • [Telegram](https://telegram.me/FayasNoushad)
 - **Source :** [Click here](https://github.com/FayasNoushad/Telegraph-Uploader-Bot)
 - **Language :** [Python3](https://python.org)
 - **Library :** [Pyrogram](https://pyrogram.org)"""
 
 START_BUTTONS = InlineKeyboardMarkup(
     [
+        [
+            InlineKeyboardButton('Feedback', url='https://telegram.me/FayasNoushad')
+        ],
         [
             InlineKeyboardButton('Help', callback_data='help'),
             InlineKeyboardButton('About', callback_data='about'),
@@ -57,10 +60,6 @@ HELP_BUTTONS = InlineKeyboardMarkup(
 
 ABOUT_BUTTONS = InlineKeyboardMarkup(
     [
-        [
-            InlineKeyboardButton('Channel', url='https://telegram.me/FayasNoushad'),
-            InlineKeyboardButton('Feedback', url='https://telegram.me/TheFayas')
-        ],
         [
             InlineKeyboardButton('Home', callback_data='home'),
             InlineKeyboardButton('Help', callback_data='help'),
