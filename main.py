@@ -11,7 +11,7 @@ Bot = Client(
     api_hash=os.environ.get("API_HASH")
 )
 
-DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "downloads/{name_format}.jpg")
+DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "downloads/telegraphbot.jpg")
 
 START_TEXT = """👋 Hello {},
 
