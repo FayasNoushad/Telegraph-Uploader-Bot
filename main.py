@@ -109,7 +109,7 @@ async def start(bot, update):
 
 
 @Bot.on_message(filters.private & filters.media)
-async def getmedia(message, Message):
+async def getmedia(_, message, Message):
     message_id = message.message.id
     medianame = DOWNLOAD_LOCATION + str(message_id)
     
