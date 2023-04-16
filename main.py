@@ -112,7 +112,7 @@ async def start(bot, update):
 async def getmedia(bot, message):
     
     user_id = message.from_user.id
-    message_id = message.message_id
+    message_id = message.message.id
     medianame = DOWNLOAD_LOCATION + str(message_id)
     
     try:
