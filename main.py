@@ -109,17 +109,17 @@ async def start(bot, update):
 
 
 @Bot.on_message(filters.private & filters.media)
-async def getmedia(bot, update):
+async def getmedia(bot, message):
     
-    medianame = DOWNLOAD_LOCATION + str(update.from_user.id)
+    medianame = DOWNLOAD_LOCATION + str(message.message_id)
     
     try:
-        message = await update.reply_text(
+        message = await message.reply_text(
             text="`Processing...`",
             disable_web_page_preview=True
         )
         await bot.download_media(
-            message=update,
+            message=message,
             file_name=medianame
         )
         response = upload_file(medianame)
