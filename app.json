@@ -1,0 +1,29 @@
+{
+    "name": "Telegraph Uploader Bot",
+    "description": " A Bot to upload telegram files under 5MB to telegra.ph",
+    "keywords": [
+        " Bot",
+        "Telegraph"
+    ],
+    "repository": "https://github.com/BXBotz2021/Telegraph-Uploader-Bot",
+    "success_url": "https://telegram.dog/Movies_Botz",
+    "env": {
+        "API_ID": {
+            "description": "Your App api_id from https://my.telegram.org",
+            "value": ""
+        },
+        "API_HASH": {
+            "description": "Your App api_hash from https://my.telegram.org",
+            "value": ""
+        },
+        "BOT_TOKEN": {
+            "description": "Your Bot Token from [BotFather](https://t.me/BotFather)",
+            "value": ""
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ]
+}
