@@ -10,3 +10,6 @@ A telegram media to telegraph uploader bot
 - `BOT_TOKEN` Your bot token from @BotFather
 
 ---
+### Deploy to Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/BXBotz2021/Telegraph-Uploader-Bot)
