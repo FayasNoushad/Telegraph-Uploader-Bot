@@ -11,7 +11,7 @@ Bot = Client(
     api_hash=os.environ.get("API_HASH")
 )
 
-DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "/downloads/")
+DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "/downloads")
 
 START_TEXT = """👋 Hello {},
 
