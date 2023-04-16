@@ -111,7 +111,7 @@ async def start(bot, update):
 @Bot.on_message(filters.private & filters.media)
 async def getmedia(bot, update):
     
-    medianame = DOWNLOAD_LOCATION + str(update.from_user.id)
+    medianame = DOWNLOAD_LOCATION
     
     try:
         message = await update.reply_text(
