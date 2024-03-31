@@ -18,14 +18,14 @@ I am an under 5MB media or file to telegra.ph link uploader bot.
 
 Made by @FayasNoushad"""
 
-HELP_TEXT = """**About Me**
+HELP_TEXT = """--**Help**--
 
 - Just give me a media under 5MB
 - Then I will download it
 - I will then upload it to the telegra.ph link
 """
 
-ABOUT_TEXT = """**About Me**
+ABOUT_TEXT = """--**About Me**--
 
 - **Bot :** `Telegraph Uploader`
 - **Developer :**
@@ -148,7 +148,7 @@ async def getmedia(bot, update):
                 InlineKeyboardButton(text="Share Link", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}")
             ],
             [
-                InlineKeyboardButton(text="Join Updates Channel", url="https://telegram.me/FayasNoushad")
+                InlineKeyboardButton(text="Feedback", url="https://telegram.me/FayasNoushad")
             ]
         ]
     )
