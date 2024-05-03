@@ -29,8 +29,8 @@ ABOUT_TEXT = """--**About Me**--
 
 - **Bot :** `Telegraph Uploader`
 - **Developer :**
-  • [GitHub](https://github.com/FayasNoushad)
-  • [Telegram](https://telegram.me/FayasNoushad)
+  • [GitHub](https://github.com/nonomeansno)
+  • [Telegram](https://telegram.me/nonomeansno)
 - **Source :** [Click here](https://github.com/FayasNoushad/Telegraph-Uploader-Bot)
 - **Language :** [Python3](https://python.org)
 - **Library :** [Pyrogram](https://pyrogram.org)"""
@@ -38,7 +38,7 @@ ABOUT_TEXT = """--**About Me**--
 START_BUTTONS = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton('Feedback', url='https://telegram.me/FayasNoushad')
+            InlineKeyboardButton('Feedback', url='https://telegram.me/nonomeansno')
         ],
         [
             InlineKeyboardButton('Help', callback_data='help'),
