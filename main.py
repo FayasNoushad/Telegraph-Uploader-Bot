@@ -122,6 +122,21 @@ async def set_fsub(bot, message: Message):
     await message.reply_text(f"✅ Force subscription channel updated to: @{force_sub_channel}")
 
 
+@Bot.on_message(filters.private & filters.command("info"))
+async def user_info(bot, message: Message):
+    user = message.from_user
+    user_info_text = f"""
+**User Info:**
+- **User ID:** `{user.id}`
+- **First Name:** `{user.first_name}`
+- **Last Name:** `{user.last_name or 'N/A'}`
+- **Username:** `{user.username or 'N/A'}`
+- **Language Code:** `{user.language_code}`
+"""
+    
+    await message.reply_text(user_info_text)
+
+
 @Bot.on_callback_query()
 async def cb_data(bot, update):
     if update.data == "home":
