@@ -7,6 +7,9 @@ from pyrogram.errors import UserNotParticipant
 # Global variable for the Force Sub Channel
 force_sub_channel = "YourInitialChannelName"  # Default value
 
+# Variable for authorized users (bot owner IDs)
+AUTH_USERS = [123456789, 987654321]  # Replace with actual user IDs
+
 Bot = Client(
     "Telegraph Uploader Bot",
     bot_token=os.environ.get("BOT_TOKEN"),
@@ -20,7 +23,7 @@ START_TEXT = """👋 Hello {},
 
 I am an under 5MB media or file to telegra.ph link uploader bot.
 
-Made With ❤️‍🔥 by @Movies_Botz"""
+Made With ❤️‍🔥 by @Moviez_Botz"""
 
 HELP_TEXT = """**About Me**
 
@@ -28,19 +31,19 @@ HELP_TEXT = """**About Me**
 - Then I will download it
 - I will then upload it to the telegra.ph link
 
-Made With ❤️‍🔥 by @Movies_Botz
+Made With ❤️‍🔥 by @Moviez_Botz
 """
 
 ABOUT_TEXT = """**About Me**
 
 - **Bot :** `Telegraph Uploader`
-- **Developer :** @Movies_Botz
+- **Developer :** @Moviez_Botz
 - **Language :** [Python3](https://python.org)
 - **Library :** [Pyrogram](https://pyrogram.org)"""
 
 START_BUTTONS = InlineKeyboardMarkup(
     [
-        [InlineKeyboardButton('📢 UPDATES CHANNEL', url='https://telegram.me/movies_botz')],
+        [InlineKeyboardButton('📢 UPDATES CHANNEL', url='https://telegram.me/moviez_botz')],
         [
             InlineKeyboardButton('✨ HELP', callback_data='help'),
             InlineKeyboardButton('⚠️ ABOUT', callback_data='about'),
@@ -104,7 +107,7 @@ async def set_fsub(bot, message: Message):
     global force_sub_channel  # Reference the global variable
     
     # Check if the user is authorized (e.g., bot owner or admin)
-    if message.from_user.id not in [123456789, 987654321]:  # Replace with actual user IDs
+    if message.from_user.id not in AUTH_USERS:
         await message.reply_text("❌ You are not authorized to use this command.")
         return
     
