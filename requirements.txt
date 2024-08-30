@@ -1,3 +1,4 @@
 pyrogram
 tgcrypto
 telegraph==1.4.1
+rembg
