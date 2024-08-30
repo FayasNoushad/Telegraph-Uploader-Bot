@@ -3,6 +3,7 @@ from telegraph import upload_file
 from pyrogram import Client, filters, idle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import UserNotParticipant
+from background_removal.remove_bg import remove_bg  # Import the new command
 
 # Global variable for the Force Sub Channel
 force_sub_channel = "YourInitialChannelName"  # Default value
