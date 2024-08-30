@@ -1,8 +1,11 @@
 import os
 from telegraph import upload_file
 from pyrogram import Client, filters, idle
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from pyrogram.types import Message
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
+from pyrogram.errors import UserNotParticipant
+
+# Global variable for the Force Sub Channel
+force_sub_channel = "YourInitialChannelName"  # Default value
 
 Bot = Client(
     "Telegraph Uploader Bot",
@@ -17,7 +20,7 @@ START_TEXT = """👋 Hello {},
 
 I am an under 5MB media or file to telegra.ph link uploader bot.
 
-Made With ❤️‍🔥by @Movies_Botz"""
+Made With ❤️‍🔥 by @Movies_Botz"""
 
 HELP_TEXT = """**About Me**
 
@@ -25,7 +28,7 @@ HELP_TEXT = """**About Me**
 - Then I will download it
 - I will then upload it to the telegra.ph link
 
-Made With ❤️‍🔥by @Movies_Botz
+Made With ❤️‍🔥 by @Movies_Botz
 """
 
 ABOUT_TEXT = """**About Me**
@@ -37,9 +40,7 @@ ABOUT_TEXT = """**About Me**
 
 START_BUTTONS = InlineKeyboardMarkup(
     [
-        [
-            InlineKeyboardButton('📢 UPDATES CHANNEL', url='https://telegram.me/movies_botz')
-        ],
+        [InlineKeyboardButton('📢 UPDATES CHANNEL', url='https://telegram.me/movies_botz')],
         [
             InlineKeyboardButton('✨ HELP', callback_data='help'),
             InlineKeyboardButton('⚠️ ABOUT', callback_data='about'),
@@ -69,36 +70,83 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
 )
 
 
+async def force_sub(bot, message):
+    try:
+        user = await bot.get_chat_member(force_sub_channel, message.from_user.id)
+        if user.status not in ["member", "administrator", "creator"]:
+            await message.reply_text(
+                text=f"❌ To use this bot, you must join [our channel](https://t.me/{force_sub_channel}) first.",
+                disable_web_page_preview=True,
+                reply_markup=InlineKeyboardMarkup(
+                    [[InlineKeyboardButton('Join Channel', url=f"https://t.me/{force_sub_channel}")]]
+                )
+            )
+            return False
+    except UserNotParticipant:
+        await message.reply_text(
+            text=f"❌ To use this bot, you must join [our channel](https://t.me/{force_sub_channel}) first.",
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton('Join Channel', url=f"https://t.me/{force_sub_channel}")]]
+            )
+        )
+        return False
+    except Exception as e:
+        await message.reply_text(
+            text=f"An error occurred: {e}"
+        )
+        return False
+    return True
+
+
+@Bot.on_message(filters.private & filters.command("set_fsub"))
+async def set_fsub(bot, message: Message):
+    global force_sub_channel  # Reference the global variable
+    
+    # Check if the user is authorized (e.g., bot owner or admin)
+    if message.from_user.id not in [123456789, 987654321]:  # Replace with actual user IDs
+        await message.reply_text("❌ You are not authorized to use this command.")
+        return
+    
+    # Get the new channel from the command arguments
+    new_channel = message.text.split(" ", 1)[1].strip()
+    if not new_channel:
+        await message.reply_text("❌ Please provide a valid channel username.")
+        return
+    
+    # Update the force_sub_channel variable
+    force_sub_channel = new_channel
+    await message.reply_text(f"✅ Force subscription channel updated to: @{force_sub_channel}")
+
+
 @Bot.on_callback_query()
 async def cb_data(bot, update):
-    
     if update.data == "home":
         await update.message.edit_text(
             text=START_TEXT.format(update.from_user.mention),
             disable_web_page_preview=True,
             reply_markup=START_BUTTONS
         )
-    
     elif update.data == "help":
         await update.message.edit_text(
             text=HELP_TEXT,
             disable_web_page_preview=True,
             reply_markup=HELP_BUTTONS
         )
-    
     elif update.data == "about":
         await update.message.edit_text(
             text=ABOUT_TEXT,
             disable_web_page_preview=True,
             reply_markup=ABOUT_BUTTONS
         )
-    
     else:
         await update.message.delete()
-    
+
 
 @Bot.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
+    if not await force_sub(bot, update):
+        return
     
     await update.reply_text(
         text=START_TEXT.format(update.from_user.mention),
@@ -110,6 +158,9 @@ async def start(bot, update):
 
 @Bot.on_message(filters.private & filters.media)
 async def getmedia(_, message: Message):
+    if not await force_sub(_, message):
+        return
+    
     message_id = message.message.id
     medianame = DOWNLOAD_LOCATION + str(message_id)
     
@@ -147,7 +198,7 @@ async def getmedia(_, message: Message):
                 InlineKeyboardButton(text="SHARE LINK ↩️", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}")
             ],
             [
-                InlineKeyboardButton(text="🔰 JOIN UPDATES CHANNEL 🔰", url="https://telegram.me/Movies_Botz")
+                InlineKeyboardButton(text="🔰 JOIN UPDATES CHANNEL 🔰", url=f"https://t.me/{force_sub_channel}")
             ]
         ]
     )
