@@ -161,49 +161,52 @@ async def user_info(bot, message: Message):
     await message.reply_text(user_info_text)
 
 
-@Bot.on_callback_query()
-async def cb_data(bot, update):
-    if update.data == "home":
-        await update.message.edit_text(
-            text=START_TEXT.format(update.from_user.mention),
+from aiogram.types import InputMediaPhoto, InlineKeyboardButton, InlineKeyboardMarkup
+
+@bot.on_callback_query()
+async def cb_data(callback_query):
+    data = callback_query.data
+    message = callback_query.message
+
+    if data == "home":
+        await message.edit_text(
+            text=START_TEXT.format(callback_query.from_user.mention),
             disable_web_page_preview=True,
             reply_markup=START_BUTTONS
         )
-    elif update.data == "help":
-        await update.message.edit_text(
+    elif data == "help":
+        await message.edit_text(
             text=HELP_TEXT,
             disable_web_page_preview=True,
             reply_markup=HELP_BUTTONS
         )
-    elif update.data == "about":
-        await update.message.edit_text(
+    elif data == "about":
+        await message.edit_text(
             text=ABOUT_TEXT,
             disable_web_page_preview=True,
             reply_markup=ABOUT_BUTTONS
         )
-    elif update.data == "check_subscription":
+    elif data == "check_subscription":
         # Recheck if the user is now subscribed
-        if await force_sub(bot, update.message):
-            await update.message.edit_text(
+        if await force_sub(bot, message):
+            await message.edit_text(
                 text="✅ Thank you for subscribing! You can now use the bot.",
                 disable_web_page_preview=True,
                 reply_markup=START_BUTTONS
             )
         else:
             # Send an alternate message with a photo if the user hasn't joined the channel
-            await update.message.edit_media(
-                media=InputMediaPhoto(
-                    media="https://telegra.ph/file/ca1420ca5bd8f6943f0e4.jpg",  # Replace with a link to the actual image you want to send
-                    caption=AJAS_TEXT,
+            await message.edit_text(
+                text=AJAS_TEXT,
                 reply_markup=InlineKeyboardMarkup(
-                    [
+                    inline_keyboard=[
                         [InlineKeyboardButton('Join Channel', url=await bot.export_chat_invite_link(force_sub_channel))],
                         [InlineKeyboardButton('✅ I Subscribed', callback_data='check_subscription')]
                     ]
                 )
             )
     else:
-        await update.message.delete()
+        await message.delete()
 
 
 @Bot.on_message(filters.private & filters.command(["start"]))
