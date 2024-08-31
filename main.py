@@ -48,11 +48,11 @@ ABOUT_TEXT = """**About Me**
 - **Language :** [Python3](https://python.org)
 - **Library :** [Pyrogram](https://pyrogram.org)"""
 
-AJAS_TEXT = "👋 hey, iam 𝗣𝗔𝗟𝗔𝗞𝗚𝗔𝗟 𝗔𝗝𝗔𝗦,
+AJAS_TEXT = """👋 hey, iam 𝗣𝗔𝗟𝗔𝗞𝗚𝗔𝗟 𝗔𝗝𝗔𝗦,
 
 Dont be oversmart infront of me🤬
 
-❌ You still need to join our channel to use the bot. Please join the channel and click 'I Subscribed ✅' again."
+❌ You still need to join our channel to use the bot. Please join the channel and click 'I Subscribed ✅' again."""
 
 
 START_BUTTONS = InlineKeyboardMarkup(
