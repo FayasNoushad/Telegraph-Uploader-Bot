@@ -7,6 +7,12 @@ from pyrogram.errors import UserNotParticipant
 from plugins.remove_bg import remove_bg  # Import the new command
 from config import Config
 # Global variable for the Force Sub Channel
+
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 force_sub_channel = '-100'  # Default value
 
 # Variable for authorized users (bot owner IDs)
