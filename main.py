@@ -9,7 +9,7 @@ from config import Config
 force_sub_channel = "YourInitialChannelName"  # Default value
 
 # Variable for authorized users (bot owner IDs)
-AUTH_USERS = [123456789, 987654321]  # Replace with actual user IDs
+AUTH_USERS = [987654321]  # Replace with actual user IDs
 
 
 Bot = Client(
