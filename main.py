@@ -6,7 +6,7 @@ from pyrogram.errors import UserNotParticipant
 from plugins.remove_bg import remove_bg  # Import the new command
 from config import Config
 # Global variable for the Force Sub Channel
-force_sub_channel = "YourInitialChannelName"  # Default value
+force_sub_channel = '-100'  # Default value
 
 # Variable for authorized users (bot owner IDs)
 AUTH_USERS = [987654321]  # Replace with actual user IDs
