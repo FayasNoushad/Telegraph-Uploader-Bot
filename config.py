@@ -1,6 +1,6 @@
 import os
 
 class Config:
-    BOT_TOKEN = os.environ.get("7339389992:AAEUMjPbcfmh0GRLGlZkDBn8-8uRz8FUKHg")
-    API_ID = int(os.environ.get('API_ID', '28271161'))
-    API_HASH = os.environ.get("c5598a74beecfb1d1be93ae85347b367")
+    BOT_TOKEN = "7339389992:AAEUMjPbcfmh0GRLGlZkDBn8-8uRz8FUKHg"  # Directly assign the bot token
+    API_ID = 28271161  # Directly assign the API ID
+    API_HASH = "c5598a74beecfb1d1be93ae85347b367"  # Directly assign the API hash
