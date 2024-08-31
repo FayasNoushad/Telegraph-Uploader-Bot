@@ -48,6 +48,13 @@ ABOUT_TEXT = """**About Me**
 - **Language :** [Python3](https://python.org)
 - **Library :** [Pyrogram](https://pyrogram.org)"""
 
+AJAS_TEXT = "👋 hey, iam 𝗣𝗔𝗟𝗔𝗞𝗚𝗔𝗟 𝗔𝗝𝗔𝗦,
+
+Dont be oversmart infront of me🤬
+
+❌ You still need to join our channel to use the bot. Please join the channel and click 'I Subscribed ✅' again."
+
+
 START_BUTTONS = InlineKeyboardMarkup(
     [
         [InlineKeyboardButton('📢 UPDATES CHANNEL', url='https://telegram.me/moviez_botz')],
@@ -187,10 +194,7 @@ async def cb_data(bot, update):
             await update.message.edit_media(
                 media=InputMediaPhoto(
                     media="https://telegra.ph/file/ca1420ca5bd8f6943f0e4.jpg",  # Replace with a link to the actual image you want to send
-                    caption="hey, iam palakkal ajas, dont be oversmart infront of me
-                    
-                    ❌ You still need to join our channel to use the bot. Please join the channel and click 'I Subscribed' again."
-                ),
+                    caption=AJAS_TEXT,
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [InlineKeyboardButton('Join Channel', url=await bot.export_chat_invite_link(force_sub_channel))],
