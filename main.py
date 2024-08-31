@@ -161,7 +161,7 @@ async def user_info(bot, message: Message):
     await message.reply_text(user_info_text)
 
 
-@bot.on_callback_query()
+@Bot.on_callback_query()
 async def cb_data(callback_query):
     data = callback_query.data
     message = callback_query.message
