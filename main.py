@@ -161,8 +161,6 @@ async def user_info(bot, message: Message):
     await message.reply_text(user_info_text)
 
 
-from aiogram.types import InputMediaPhoto, InlineKeyboardButton, InlineKeyboardMarkup
-
 @bot.on_callback_query()
 async def cb_data(callback_query):
     data = callback_query.data
