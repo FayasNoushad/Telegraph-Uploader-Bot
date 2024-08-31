@@ -3,21 +3,19 @@ import logging
 from telegraph import upload_file
 from pyrogram import Client, filters, idle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
-from pyrogram.errors import UserNotParticipant
+from pyrogram.errors import UserNotParticipant, ChatAdminRequired
 from plugins.remove_bg import remove_bg  # Import the new command
 from config import Config
-# Global variable for the Force Sub Channel
-
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-force_sub_channel = '-100'  # Default value
+# Global variable for the Force Sub Channel (numeric ID)
+force_sub_channel = '-1001234567890'  # Replace with your channel's numeric ID
 
 # Variable for authorized users (bot owner IDs)
 AUTH_USERS = [6974737899]  # Replace with actual user IDs
-
 
 Bot = Client(
     "Telegraph Uploader Bot",
@@ -86,21 +84,41 @@ async def force_sub(bot, message):
     try:
         logger.info(f"Checking if user is a member of the channel with ID: {force_sub_channel}")
         user = await bot.get_chat_member(force_sub_channel, message.from_user.id)
+
         if user.status not in ["member", "administrator", "creator"]:
+            try:
+                invite_link = await bot.export_chat_invite_link(force_sub_channel)
+            except ChatAdminRequired:
+                await message.reply_text("❌ I need to be an admin in the channel to generate an invite link.")
+                return False
+
+            # Send a message with a "Check Subscription" button
             await message.reply_text(
-                text=f"❌ To use this bot, you must join [our channel](https://t.me/{force_sub_channel}) first.",
+                text=f"❌ To use this bot, you must join [our channel]({invite_link}) first.",
                 disable_web_page_preview=True,
                 reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton('Join Channel', url=f"https://t.me/{force_sub_channel}")]]
+                    [
+                        [InlineKeyboardButton('Join Channel', url=invite_link)],
+                        [InlineKeyboardButton('✅ I Subscribed', callback_data='check_subscription')]
+                    ]
                 )
             )
             return False
     except UserNotParticipant:
+        try:
+            invite_link = await bot.export_chat_invite_link(force_sub_channel)
+        except ChatAdminRequired:
+            await message.reply_text("❌ I need to be an admin in the channel to generate an invite link.")
+            return False
+
         await message.reply_text(
-            text=f"❌ To use this bot, you must join [our channel](https://t.me/{force_sub_channel}) first.",
+            text=f"❌ To use this bot, you must join [our channel]({invite_link}) first.",
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton('Join Channel', url=f"https://t.me/{force_sub_channel}")]]
+                [
+                    [InlineKeyboardButton('Join Channel', url=invite_link)],
+                    [InlineKeyboardButton('✅ I Subscribed', callback_data='check_subscription')]
+                ]
             )
         )
         return False
@@ -110,9 +128,8 @@ async def force_sub(bot, message):
             text=f"An error occurred: {e}"
         )
         return False
+
     return True
-
-
 
 
 @Bot.on_message(filters.private & filters.command("set_fsub"))
@@ -170,15 +187,21 @@ async def cb_data(bot, update):
             disable_web_page_preview=True,
             reply_markup=ABOUT_BUTTONS
         )
+    elif update.data == "check_subscription":
+        # Recheck if the user is now subscribed
+        if await force_sub(bot, update.message):
+            await update.message.edit_text(
+                text="✅ Thank you for subscribing! You can now use the bot.",
+                disable_web_page_preview=True,
+                reply_markup=START_BUTTONS
+            )
     else:
         await update.message.delete()
 
 
 @Bot.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
-    if not await force_sub(bot, update):
-        return
-    
+    # Directly send the start message without checking subscription
     await update.reply_text(
         text=START_TEXT.format(update.from_user.mention),
         disable_web_page_preview=True,
@@ -187,23 +210,20 @@ async def start(bot, update):
     )
 
 
-@Bot.on_message(filters.private & filters.media)
-async def getmedia(_, message: Message):
-    if not await force_sub(_, message):
+@Bot.on_message(filters.private & (filters.media | filters.command(["upload", "other_command"])))
+async def getmedia(bot, message: Message):
+    if not await force_sub(bot, message):
         return
     
-    message_id = message.message.id
+    message_id = message.message_id
     medianame = DOWNLOAD_LOCATION + str(message_id)
     
     try:
-        message = await message.reply_text(
+        processing_message = await message.reply_text(
             text="`Processing...`",
             disable_web_page_preview=True
         )
-        await message.download_media(
-            message=message,
-            file_name=medianame
-        )
+        await message.download(file_name=medianame)
         response = upload_file(medianame)
         try:
             os.remove(medianame)
@@ -214,7 +234,7 @@ async def getmedia(_, message: Message):
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton('More Help', callback_data='help')]]
         )
-        await message.edit_text(
+        await processing_message.edit_text(
             text=text,
             disable_web_page_preview=True,
             reply_markup=reply_markup
@@ -234,7 +254,7 @@ async def getmedia(_, message: Message):
         ]
     )
     
-    await message.edit_text(
+    await processing_message.edit_text(
         text=text,
         disable_web_page_preview=True,
         reply_markup=reply_markup
