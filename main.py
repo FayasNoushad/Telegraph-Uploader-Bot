@@ -84,7 +84,7 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
 
 async def force_sub(bot, message):
     try:
-        logger.info(f"Attempting to resolve username: {force_sub_channel}")
+        logger.info(f"Checking if user is a member of the channel with ID: {force_sub_channel}")
         user = await bot.get_chat_member(force_sub_channel, message.from_user.id)
         if user.status not in ["member", "administrator", "creator"]:
             await message.reply_text(
@@ -111,6 +111,7 @@ async def force_sub(bot, message):
         )
         return False
     return True
+
 
 
 
