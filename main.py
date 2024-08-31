@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 force_sub_channel = '-100'  # Default value
 
 # Variable for authorized users (bot owner IDs)
-AUTH_USERS = [987654321]  # Replace with actual user IDs
+AUTH_USERS = [6974737899]  # Replace with actual user IDs
 
 
 Bot = Client(
