@@ -77,6 +77,7 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
 
 async def force_sub(bot, message):
     try:
+        logger.info(f"Attempting to resolve username: {force_sub_channel}")
         user = await bot.get_chat_member(force_sub_channel, message.from_user.id)
         if user.status not in ["member", "administrator", "creator"]:
             await message.reply_text(
@@ -97,11 +98,13 @@ async def force_sub(bot, message):
         )
         return False
     except Exception as e:
+        logger.error(f"Error in force_sub: {e}")
         await message.reply_text(
             text=f"An error occurred: {e}"
         )
         return False
     return True
+
 
 
 @Bot.on_message(filters.private & filters.command("set_fsub"))
