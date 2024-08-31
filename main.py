@@ -4,8 +4,8 @@ from telegraph import upload_file
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import UserNotParticipant, ChatAdminRequired
-from plugins.remove_bg import remove_bg  # Import the new command
 from config import Config
+from pyrogram.types import InputMediaPhoto
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -182,13 +182,31 @@ async def cb_data(bot, update):
                 disable_web_page_preview=True,
                 reply_markup=START_BUTTONS
             )
+        else:
+            # Send an alternate message with a photo if the user hasn't joined the channel
+            await update.message.edit_media(
+                media=InputMediaPhoto(
+                    media="https://telegra.ph/file/ca1420ca5bd8f6943f0e4.jpg",  # Replace with a link to the actual image you want to send
+                    caption="hey, iam palakkal ajas, dont be oversmart infront of me
+                    
+                    ❌ You still need to join our channel to use the bot. Please join the channel and click 'I Subscribed' again."
+                ),
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [InlineKeyboardButton('Join Channel', url=await bot.export_chat_invite_link(force_sub_channel))],
+                        [InlineKeyboardButton('✅ I Subscribed', callback_data='check_subscription')]
+                    ]
+                )
+            )
     else:
         await update.message.delete()
 
 
 @Bot.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
-    # Directly send the start message without checking subscription
+    if not await force_sub(bot, update):
+        return
+    
     await update.reply_text(
         text=START_TEXT.format(update.from_user.mention),
         disable_web_page_preview=True,
