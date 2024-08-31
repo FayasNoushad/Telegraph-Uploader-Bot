@@ -89,14 +89,25 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
 async def force_sub(bot, message):
     try:
         logger.info(f"Checking if user is a member of the channel with ID: {force_sub_channel}")
-        user = await bot.get_chat_member(force_sub_channel, message.from_user.id)
+        
+        # Ensure force_sub_channel is correctly formatted
+        if force_sub_channel.startswith('@'):
+            force_sub_channel_id = force_sub_channel
+        else:
+            force_sub_channel_id = int(force_sub_channel)
+
+        user = await bot.get_chat_member(force_sub_channel_id, message.from_user.id)
 
         # If the user is already a member, allow access
         if user.status in ["member", "administrator", "creator"]:
+            logger.info("User is a member of the channel.")
             return True
+
     except UserNotParticipant:
+        logger.warning("User is not a participant in the channel.")
         pass  # User is not a participant, proceed to send the subscription message
     except ChatAdminRequired:
+        logger.error("Bot needs to be an admin in the channel to generate an invite link.")
         await message.reply_text("❌ I need to be an admin in the channel to generate an invite link.")
         return False
     except Exception as e:
@@ -108,8 +119,9 @@ async def force_sub(bot, message):
 
     # If the user is not subscribed, send the force subscription message
     try:
-        invite_link = await bot.export_chat_invite_link(force_sub_channel)
+        invite_link = await bot.export_chat_invite_link(force_sub_channel_id)
     except ChatAdminRequired:
+        logger.error("Bot needs to be an admin in the channel to generate an invite link.")
         await message.reply_text("❌ I need to be an admin in the channel to generate an invite link.")
         return False
 
@@ -125,6 +137,7 @@ async def force_sub(bot, message):
         )
     )
     return False
+
 
 @Bot.on_message(filters.private & filters.command("set_fsub"))
 async def set_fsub(bot, message: Message):
