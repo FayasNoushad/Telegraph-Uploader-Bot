@@ -4,18 +4,19 @@ from pyrogram import Client, filters, idle
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import UserNotParticipant
 from background_removal.remove_bg import remove_bg  # Import the new command
-
+from config import Config
 # Global variable for the Force Sub Channel
 force_sub_channel = "YourInitialChannelName"  # Default value
 
 # Variable for authorized users (bot owner IDs)
 AUTH_USERS = [123456789, 987654321]  # Replace with actual user IDs
 
+
 Bot = Client(
     "Telegraph Uploader Bot",
-    bot_token=os.environ.get("BOT_TOKEN"),
-    api_id=int(os.environ.get("API_ID")),
-    api_hash=os.environ.get("API_HASH")
+    bot_token=Config.BOT_TOKEN,
+    api_id=Config.API_ID,
+    api_hash=Config.API_HASH
 )
 
 DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "downloads/telegraphbot.jpg")
