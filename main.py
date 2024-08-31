@@ -1,7 +1,7 @@
 import os
 import logging
 from telegraph import upload_file
-from pyrogram import Client, filters, idle
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import UserNotParticipant, ChatAdminRequired
 from plugins.remove_bg import remove_bg  # Import the new command
@@ -79,48 +79,18 @@ ABOUT_BUTTONS = InlineKeyboardMarkup(
     ]
 )
 
-
 async def force_sub(bot, message):
     try:
         logger.info(f"Checking if user is a member of the channel with ID: {force_sub_channel}")
         user = await bot.get_chat_member(force_sub_channel, message.from_user.id)
 
-        if user.status not in ["member", "administrator", "creator"]:
-            try:
-                invite_link = await bot.export_chat_invite_link(force_sub_channel)
-            except ChatAdminRequired:
-                await message.reply_text("❌ I need to be an admin in the channel to generate an invite link.")
-                return False
-
-            # Send a message with a "Check Subscription" button
-            await message.reply_text(
-                text=f"❌ To use this bot, you must join [our channel]({invite_link}) first.",
-                disable_web_page_preview=True,
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [InlineKeyboardButton('Join Channel', url=invite_link)],
-                        [InlineKeyboardButton('✅ I Subscribed', callback_data='check_subscription')]
-                    ]
-                )
-            )
-            return False
+        # If the user is already a member, allow access
+        if user.status in ["member", "administrator", "creator"]:
+            return True
     except UserNotParticipant:
-        try:
-            invite_link = await bot.export_chat_invite_link(force_sub_channel)
-        except ChatAdminRequired:
-            await message.reply_text("❌ I need to be an admin in the channel to generate an invite link.")
-            return False
-
-        await message.reply_text(
-            text=f"❌ To use this bot, you must join [our channel]({invite_link}) first.",
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [InlineKeyboardButton('Join Channel', url=invite_link)],
-                    [InlineKeyboardButton('✅ I Subscribed', callback_data='check_subscription')]
-                ]
-            )
-        )
+        pass  # User is not a participant, proceed to send the subscription message
+    except ChatAdminRequired:
+        await message.reply_text("❌ I need to be an admin in the channel to generate an invite link.")
         return False
     except Exception as e:
         logger.error(f"Error in force_sub: {e}")
@@ -129,8 +99,25 @@ async def force_sub(bot, message):
         )
         return False
 
-    return True
+    # If the user is not subscribed, send the force subscription message
+    try:
+        invite_link = await bot.export_chat_invite_link(force_sub_channel)
+    except ChatAdminRequired:
+        await message.reply_text("❌ I need to be an admin in the channel to generate an invite link.")
+        return False
 
+    # Send a message with a "Check Subscription" button
+    await message.reply_text(
+        text=f"❌ To use this bot, you must join [our channel]({invite_link}) first.",
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [InlineKeyboardButton('Join Channel', url=invite_link)],
+                [InlineKeyboardButton('✅ I Subscribed', callback_data='check_subscription')]
+            ]
+        )
+    )
+    return False
 
 @Bot.on_message(filters.private & filters.command("set_fsub"))
 async def set_fsub(bot, message: Message):
