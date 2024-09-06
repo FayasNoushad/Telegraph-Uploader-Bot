@@ -24,3 +24,11 @@ python3 main.py
 - `BOT_TOKEN` Your bot token from @BotFather
 
 ---
+
+
+### Don't misuse
+
+---
+
+### This repository is archived due to some reasons
+https://t.me/durov/343
